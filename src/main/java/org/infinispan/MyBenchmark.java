@@ -12,31 +12,33 @@ import org.openjdk.jmh.annotations.Mode;
       "-server",
       "-Dorg.jboss.logging.provider=jboss",
       "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
+      // Try to imitate https://github.com/AdoptOpenJDK/jitwatch/blob/master/makeDemoLogFile.sh
       "-XX:+UnlockDiagnosticVMOptions",
+      "-XX:+TraceClassLoading",
+      "-XX:+LogCompilation",
       "-XX:+PrintInlining",
-      "-XX:+PrintCompilation",
-      "-XX:+PrintCompilation2"
+      "-XX:+PrintAssembly",
+      "-XX:PrintAssemblyOptions=intel"
 })
 // Run with: -Dorg.jboss.logging.provider=jboss -Djava.util.logging.manager=org.jboss.logmanager.LogManager
 @BenchmarkMode({Mode.Throughput})
 public class MyBenchmark {
+    private static final Logger logger = Logger.getLogger(MyBenchmark.class);
+    private static final boolean trace = logger.isTraceEnabled();
 
     @Benchmark
-    public void noVariable(LoggerHolder loggerHolder) {
-        Logger logger = loggerHolder.getLogger();
+    public void noVariable() {
         logger.tracef("test %s", "test");
     }
 
     @Benchmark
-    public void withVariable(LoggerHolder loggerHolder) {
-        Logger logger = loggerHolder.getLogger();
-        if(loggerHolder.isTraceEnabled)
+    public void withConstant() {
+        if(trace)
             logger.tracef("test %s", "test");
     }
 
     @Benchmark
-    public void withIsTraceEnabledCheck(LoggerHolder loggerHolder) {
-        Logger logger = loggerHolder.getLogger();
+    public void withIsTraceEnabledCheck() {
         if(logger.isTraceEnabled())
             logger.tracef("test %s", "test");
     }
