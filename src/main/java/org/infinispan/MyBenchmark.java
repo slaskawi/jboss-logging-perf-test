@@ -12,8 +12,9 @@ import org.openjdk.jmh.annotations.Mode;
       "-server",
       "-Dorg.jboss.logging.provider=jboss",
       "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
-      "-XX:+PrintCompilation",
       "-XX:+UnlockDiagnosticVMOptions",
+      "-XX:+PrintInlining",
+      "-XX:+PrintCompilation",
       "-XX:+PrintCompilation2"
 })
 // Run with: -Dorg.jboss.logging.provider=jboss -Djava.util.logging.manager=org.jboss.logmanager.LogManager
