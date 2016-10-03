@@ -10,8 +10,12 @@ import org.openjdk.jmh.annotations.Mode;
       "-Xmx4G",
       "-Xms4G",
       "-server"
+//      "-XX:+PrintCompilation",
+//      "-XX:+UnlockDiagnosticVMOptions",
+//      "-XX:+PrintCompilation2"
 })
-@BenchmarkMode(Mode.Throughput)
+// Run with: -Dorg.jboss.logging.provider=jboss -Djava.util.logging.manager=org.jboss.logmanager.LogManager
+@BenchmarkMode({Mode.Throughput, Mode.SingleShotTime})
 public class MyBenchmark {
 
     @Benchmark
@@ -24,6 +28,13 @@ public class MyBenchmark {
     public void withVariable(LoggerHolder loggerHolder) {
         Logger logger = loggerHolder.getLogger();
         if(loggerHolder.isTraceEnabled)
+            logger.tracef("test %s", "test");
+    }
+
+    @Benchmark
+    public void withIsTraceEnabledCheck(LoggerHolder loggerHolder) {
+        Logger logger = loggerHolder.getLogger();
+        if(logger.isTraceEnabled())
             logger.tracef("test %s", "test");
     }
 
