@@ -9,10 +9,12 @@ import org.openjdk.jmh.annotations.Mode;
 @Fork(value=1, jvmArgs = {
       "-Xmx4G",
       "-Xms4G",
-      "-server"
-//      "-XX:+PrintCompilation",
-//      "-XX:+UnlockDiagnosticVMOptions",
-//      "-XX:+PrintCompilation2"
+      "-server",
+      "-Dorg.jboss.logging.provider=jboss",
+      "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
+      "-XX:+PrintCompilation",
+      "-XX:+UnlockDiagnosticVMOptions",
+      "-XX:+PrintCompilation2"
 })
 // Run with: -Dorg.jboss.logging.provider=jboss -Djava.util.logging.manager=org.jboss.logmanager.LogManager
 @BenchmarkMode({Mode.Throughput})
