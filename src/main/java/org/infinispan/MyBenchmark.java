@@ -15,7 +15,7 @@ import org.openjdk.jmh.annotations.Mode;
 //      "-XX:+PrintCompilation2"
 })
 // Run with: -Dorg.jboss.logging.provider=jboss -Djava.util.logging.manager=org.jboss.logmanager.LogManager
-@BenchmarkMode({Mode.Throughput, Mode.SingleShotTime})
+@BenchmarkMode({Mode.Throughput})
 public class MyBenchmark {
 
     @Benchmark
